@@ -1,0 +1,28 @@
+form input{
+    display: block;
+    padding: 10px;
+    margin: 5px;
+}
+
+.loginbutton
+{
+    background-color: blue;
+    color:white;
+    width: 100%;
+}
+
+form{
+    position: fixed;
+    top: 35%;
+    left: 40%;
+    background-color: powderblue;
+    padding: 10px;
+}
+
+ h1{
+    position: fixed;
+    color:red;
+    left:40%;
+    top: 25%;
+
+ }
