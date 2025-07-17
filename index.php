@@ -60,6 +60,12 @@ mysqli_stmt_bind_param($stmt, "ssssss", $name, $phone, $email, $password, $cpass
 
         if (mysqli_stmt_execute($stmt)) {
             echo "<script>alert('Registered Successfully');</script>";
+
+            // echo "<script>alert('Registered Successfully');</script>"; // Not reliable after redirect
+            header("Location: login.php"); // Redirect to login after success
+            exit;
+
+
         } else {
             echo "Execute failed: " . mysqli_stmt_error($stmt);
         }
@@ -177,6 +183,9 @@ mysqli_stmt_bind_param($stmt, "ssssss", $name, $phone, $email, $password, $cpass
                     else
                     {
                       alert("Registered SuccessFully! ");
+                      header("Location: login.php");
+                      exit;
+
                       return true;
                     }
 
@@ -211,7 +220,10 @@ mysqli_stmt_bind_param($stmt, "ssssss", $name, $phone, $email, $password, $cpass
                 <label for="address">Address</label>
                 <input type="text" id="address" name="address">
             </div>
+      
             <input type="submit" value="Register" name="submit">
+            If you Are Registred :
+            <a href="login.php">Login</a>
         </form>
     </div>
 </body>

@@ -1,0 +1,41 @@
+/* Reset & Base */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body, input, textarea, button { font-family: 'Segoe UI', sans-serif; }
+
+/* Contact Section */
+.contact-section { padding: 60px 20px; background: #f9f9f9; }
+.contact-container { display: flex; flex-wrap: wrap; max-width: 1200px; margin: auto; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.contact-image img { width: 100%; height: 100%; object-fit: cover; }
+.contact-image { flex: 1 1 400px; }
+.contact-form { flex: 1 1 400px; padding: 40px; }
+.contact-form h2 { margin-bottom: 20px; color: #333; }
+.contact-form input, .contact-form textarea {
+  width: 100%; padding: 12px; margin-bottom: 16px;
+  border: 1px solid #ccc; border-radius: 4px;
+}
+.contact-form button {
+  background: #c0392b; color: white;
+  padding: 14px 20px; border: none; border-radius: 4px;
+  cursor: pointer; font-size: 1rem;
+}
+.contact-form button:hover { background: #e74c3c; }
+
+/* Footer */
+.site-footer { background: #2c3e50; color: #ecf0f1; padding: 40px 20px; }
+.footer-content { display: flex; flex-wrap: wrap; justify-content: space-between; max-width: 1200px; margin: auto; }
+.footer-content > div { flex: 1 1 220px; margin: 10px; }
+.footer-about h3 { font-size: 1.5rem; margin-bottom: 10px; }
+.footer-links ul { list-style: none; }
+.footer-links li { margin-bottom: 8px; }
+.footer-links a { color: #bdc3c7; text-decoration: none; }
+.footer-links a:hover { color: white; }
+.footer-contact-info p, .footer-about p { margin-bottom: 8px; }
+.footer-social a { margin-right: 10px; display: inline-block; }
+.footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid #34495e; font-size: 0.9rem; }
+.footer-bottom a { color: #bdc3c7; text-decoration: none; }
+.footer-bottom a:hover { color: white; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .contact-container, .footer-content { flex-direction: column; }
+}

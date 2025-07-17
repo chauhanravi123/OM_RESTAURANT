@@ -1,90 +1,146 @@
 <?php
-session_start();
-include 'connection.php';  // $conn = new mysqli(...);
-if(isset($_POST['submit']))
-{
-    $email=$_POST['email'];
-    $password=$_POST['password'];
+// login.php
+include 'connection.php';
+// Assuming you have already connected to your database
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
-    $sql="SELECT * FROM `users` where `email`='$email' || `password`='$password'";
-    $result=mysqli_query($conn,$sql);
+    // Sample query (please sanitize and use prepared statements in production)
+    $result = mysqli_query($conn, "SELECT * FROM users WHERE email='$email'");
+    $res = mysqli_num_rows($result);
 
-    if($result)
-    {
-        echo "LOGIN SUCCESSFULLY!";
-    }
-    else
-    {
-        echo "Invalid Login credentials";
+    if ($res > 0) {
+        $data = mysqli_fetch_assoc($result);
+        if ($data['password'] == $password) {
+            $message = "LOGIN SUCCESSFULLY!";
+            $color = "green";
+            header("location:home.php");
+        } else {
+            $message = "Wrong password!";
+            $color = "orange";
+        }
+    } else {
+        $message = "Email not registered. Please register first!";
+        $color = "red";
+
     }
 }
-
-   
-
-
 ?>
+
+
+
+
 
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Login</title>
-  <script>
-                    function login()
-                {
-                   
-                    var email=document.getElementById("email").value;
-                    var password=document.getElementById("password").value;
+    <meta charset="UTF-8">
+    <title>Login GUI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #74ebd5, #acb6e5);
+            display: flex;
+            height: 100vh;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
 
-                    if(email==""||password=="")
-                    {
-                        alert("All Fields Are Mendatory!");
-                        return false;
-                    }
-                    else if(password.length<6)
-                    {
-                        alert("Password Should above 6 character!");
-                        return false;
-                    }
-                    else
-                    {
-                        alert("Login SuccessFully!");
-                        return true;
-                    }
+        .login-box {
+            background: #fff;
+            padding: 40px 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
 
-                }
-                
+        .login-box h2 {
+            margin-bottom: 25px;
+            color: #333;
+        }
 
-  </script>
-  <style>
-    body {font-family: Arial; background:#f4f4f4; display:flex; justify-content:center;align-items:center;height:100vh;}
-    .container {background:#fff;padding:20px;border-radius:5px;box-shadow:0 2px 5px rgba(0,0,0,.1);width:300px;}
-    .form-group {margin-bottom:15px;}
-    input {width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;}
-    input:focus {border-color:#007BFF; outline:none;}
-    .error {color:#d9534f;font-size:0.9em;}
-    .success {color:#28a745;font-size:1em;text-align:center;margin-bottom:10px;}
-    button {width:100%;padding:10px;background:#007BFF;color:#fff;border:none;border-radius:4px;cursor:pointer;}
-    button:hover {background:#0056b3;}
-  </style>
+        label {
+            display: block;
+            text-align: left;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #444;
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            border-color: #6c63ff;
+            outline: none;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background: #6c63ff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background: #574fd6;
+        }
+
+        .message {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #d8000c;
+        }
+
+        /* Responsive design */
+        @media (max-width: 480px) {
+            .login-box {
+                padding: 30px 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
 
-    <form action="login.php" method="post" onsubmit="return login()">
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" name="email" required>
-      </div>
-      <div class="form-group">
-        <label>Password</label>
-        <input type="password" name="password" required>
+<div class="login-box">
+    <h2>Login</h2>
+    <form method="POST" action="login.php">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" placeholder="Enter your email" required>
+         
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" placeholder="Enter your password" required>
         
-      </div>
-      <button type="submit" name="submit">Login</button>
+        <button type="submit">Login</button>
+        New User:
+        <a href="index.php">Register</a>
     </form>
-  </div>
-</body>
-</html>
 
+    <?php if (isset($message)): ?>
+        <div class="message" style="color: <?= $color ?>;">
+            <?= $message ?>
+        </div>
+    <?php endif; ?>
+</div>
+
+</body>
+ 
+</html>
